@@ -10,6 +10,8 @@ from sklearn.preprocessing import OneHotEncoder, StandardScaler, LabelEncoder
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.ensemble import RandomForestClassifier
+from fastapi.middleware.cors import CORSMiddleware
+
 
 DATA_PATH = "movies_dataset.jsonl"   # My movies dataset
 
@@ -86,6 +88,13 @@ pipeline.fit(X_train, y_train)
 
 app = FastAPI(title="MORE API")
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 class RecommendRequest(BaseModel):
     age: int
     gender: str
